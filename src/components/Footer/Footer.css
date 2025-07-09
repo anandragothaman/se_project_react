@@ -1,0 +1,15 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Cabinet Grotesk Medium";
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 85px 0 24px 0;
+}
+.footer__author {
+  margin: 0;
+}
+.footer__copyright {
+  margin: 0;
+}
