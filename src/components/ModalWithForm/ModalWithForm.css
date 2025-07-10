@@ -49,6 +49,9 @@
   margin-bottom: 8px;
   color: #00000080;
 }
+.modal__label_type_radio span {
+  cursor: pointer;
+}
 :checked + span {
   color: #000;
 }
@@ -69,6 +72,9 @@
   flex-direction: column;
   margin-bottom: 24px;
 }
+.modal__radio-input {
+  cursor: pointer;
+}
 .modal__legend {
   margin-bottom: 12px;
 }
@@ -79,6 +85,7 @@
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
+  cursor: pointer;
 }
 .modal__submit:hover {
   background: #00000099;
