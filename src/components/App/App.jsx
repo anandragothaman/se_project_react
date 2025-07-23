@@ -7,7 +7,7 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import ItemModal from "../ItemModal/ItemModal";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
-import currentTemperatureUnitContext from "../Contexts/CurrentTemperatureUnitContext";
+import CurrentTemperatureUnitContext from "../Contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import Profile from "../Profile/Profile";
 import { getItems, addItems, deleteItem } from "../../utils/api";
@@ -73,7 +73,7 @@ function App() {
       .catch(console.error);
   }, []);
   return (
-    <currentTemperatureUnitContext.Provider
+    <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
     >
       <div className="page">
@@ -117,7 +117,7 @@ function App() {
           onClose={closeActiveModal}
         />
       </div>
-    </currentTemperatureUnitContext.Provider>
+    </CurrentTemperatureUnitContext.Provider>
   );
 }
 

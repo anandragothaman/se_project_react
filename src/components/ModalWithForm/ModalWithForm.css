@@ -37,6 +37,8 @@
   position: absolute;
   top: 20px;
   right: 28px;
+  border: none;
+  background: none;
 }
 .modal__form {
   display: flex;
