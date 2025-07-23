@@ -1,17 +1,16 @@
 import { useEffect, useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import {
-  coordinates,
-  APIkey,
-  defaultClothingItems,
-} from "../../utils/constants";
+import { coordinates, APIkey } from "../../utils/constants";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import ItemMOdal from "../ItemModal/ItemModal";
+import ItemModal from "../ItemModal/ItemModal";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import currentTemperatureUnitContext from "../Contexts/CurrentTemperatureUnitContext";
 import AddItemModal from "../AddItemModal/AddItemModal";
+import Profile from "../Profile/Profile";
+import { getItems, addItems, deleteItem } from "../../utils/api";
 
 function App() {
   const [weatherData, setWeatherData] = useState({
@@ -23,7 +22,7 @@ function App() {
   });
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
-  const [clothingItems, setClothingItems] = useState(defaultClothingItems);
+  const [clothingItems, setClothingItems] = useState([]);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
 
   const handleToggleSwitchChange = () => {
@@ -40,11 +39,19 @@ function App() {
   };
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    setClothingItems((prevItems) => [
-      { name, link: imageUrl, weather },
-      ...prevItems,
-    ]);
-    closeActiveModal();
+    addItems({ name, imageUrl, weather }).then((data) => {
+      setClothingItems((prevItems) => [data, ...prevItems]);
+      closeActiveModal();
+    });
+  };
+  const handleDeleteItem = (id) => {
+    deleteItem(id).then(() => {
+      //const updatedRecords = clothingItems.filter((item) => item._id !== id);
+      setClothingItems((prevItems) => {
+        return prevItems.filter((item) => item._id !== id);
+      });
+      closeActiveModal();
+    });
   };
   const closeActiveModal = () => {
     setActiveModal("");
@@ -57,6 +64,14 @@ function App() {
       })
       .catch(console.error);
   }, []);
+
+  useEffect(() => {
+    getItems()
+      .then((data) => {
+        setClothingItems(data);
+      })
+      .catch(console.error);
+  }, []);
   return (
     <currentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
@@ -64,11 +79,30 @@ function App() {
       <div className="page">
         <div className="page__content">
           <Header handleAddClick={handleAddClick} weatherData={weatherData} />
-          <Main
-            weatherData={weatherData}
-            clothingItems={clothingItems}
-            handleCardClick={handleCardClick}
-          />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Main
+                  weatherData={weatherData}
+                  clothingItems={clothingItems}
+                  onCardClick={handleCardClick}
+                />
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  handleAddClick={handleAddClick}
+                  weatherData={weatherData}
+                  clothingItems={clothingItems}
+                  onCardClick={handleCardClick}
+                />
+              }
+            />
+          </Routes>
+
           <Footer />
         </div>
         <AddItemModal
@@ -76,9 +110,10 @@ function App() {
           onClose={closeActiveModal}
           onAddItemModalSubmit={handleAddItemModalSubmit}
         />
-        <ItemMOdal
+        <ItemModal
           isOpen={activeModal === "preview"}
           card={selectedCard}
+          onDeleteItem={handleDeleteItem}
           onClose={closeActiveModal}
         />
       </div>

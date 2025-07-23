@@ -1,0 +1,34 @@
+const baseUrl = "http://localhost:3001";
+const header = { "Content-Type": "application/json" };
+
+function checkResponse(res) {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Error: ${res.status}`);
+}
+
+function getItems() {
+  return fetch(`${baseUrl}/items`).then(checkResponse);
+}
+
+function addItems({ name, imageUrl, weather }) {
+  return fetch(`${baseUrl}/items`, {
+    method: "POST",
+    headers: header,
+    body: JSON.stringify({
+      name,
+      imageUrl,
+      weather,
+    }),
+  }).then(checkResponse);
+}
+
+function deleteItem(id) {
+  return fetch(`${baseUrl}/items/${id}`, {
+    method: "DELETE",
+    headers: header,
+  }).then(checkResponse);
+}
+
+export { getItems, addItems, deleteItem };
