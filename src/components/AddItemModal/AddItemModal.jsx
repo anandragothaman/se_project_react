@@ -1,6 +1,6 @@
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function AddItemModal({
   onClose,
@@ -22,10 +22,12 @@ export default function AddItemModal({
   const handleSubmit = (e) => {
     e.preventDefault();
     onAddItemModalSubmit({ name, imageUrl, weather });
+  };
+  useEffect(() => {
     setName("");
     setImageUrl("");
     setWeather("");
-  };
+  }, [isOpen]);
   return (
     <ModalWithForm
       buttonText="Add garment"

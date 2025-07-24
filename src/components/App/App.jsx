@@ -39,19 +39,23 @@ function App() {
   };
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
-    addItems({ name, imageUrl, weather }).then((data) => {
-      setClothingItems((prevItems) => [data, ...prevItems]);
-      closeActiveModal();
-    });
+    addItems({ name, imageUrl, weather })
+      .then((data) => {
+        setClothingItems((prevItems) => [data, ...prevItems]);
+        closeActiveModal();
+      })
+      .catch(console.error);
   };
   const handleDeleteItem = (id) => {
-    deleteItem(id).then(() => {
-      //const updatedRecords = clothingItems.filter((item) => item._id !== id);
-      setClothingItems((prevItems) => {
-        return prevItems.filter((item) => item._id !== id);
-      });
-      closeActiveModal();
-    });
+    deleteItem(id)
+      .then(() => {
+        //const updatedRecords = clothingItems.filter((item) => item._id !== id);
+        setClothingItems((prevItems) => {
+          return prevItems.filter((item) => item._id !== id);
+        });
+        closeActiveModal();
+      })
+      .catch(console.error);
   };
   const closeActiveModal = () => {
     setActiveModal("");
@@ -72,6 +76,19 @@ function App() {
       })
       .catch(console.error);
   }, []);
+
+  useEffect(() => {
+    if (!activeModal) return;
+    const handleEscClose = (e) => {
+      if (e.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+    document.addEventListener("keydown", handleEscClose);
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+    };
+  }, [activeModal]);
   return (
     <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}

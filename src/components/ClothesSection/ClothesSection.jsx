@@ -20,15 +20,11 @@ export default function ClothesSection({
         </button>
       </div>
       <ul className="clothes-section__list">
-        {clothingItems
-          .filter((item) => {
-            return item.weather === weatherData.type;
-          })
-          .map((item) => {
-            return (
-              <ItemCard key={item._id} item={item} onCardClick={onCardClick} />
-            );
-          })}
+        {clothingItems.map((item) => {
+          return (
+            <ItemCard key={item._id} item={item} onCardClick={onCardClick} />
+          );
+        })}
       </ul>
     </div>
   );
