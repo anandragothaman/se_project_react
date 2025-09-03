@@ -2,3 +2,7 @@
   display: flex;
   gap: 116px;
 }
+.profile__sidebar {
+  min-width: 210px;
+  display: flex;
+}

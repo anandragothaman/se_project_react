@@ -8,11 +8,12 @@ export default function Profile({
   clothingItems,
   weatherData,
   onCardLike,
+  onEditProfileModalSubmit,
 }) {
   return (
     <div className="profile">
       <section className="profile__sidebar">
-        <SideBar />
+        <SideBar onEditProfileModalSubmit={onEditProfileModalSubmit} />
       </section>
       <section className="profile__clothes-section">
         <ClothesSection

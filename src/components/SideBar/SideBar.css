@@ -1,7 +1,5 @@
 .sidebar {
   display: flex;
-  gap: 16px;
-  align-items: center;
   flex-direction: column;
 }
 .sidebar__header {
@@ -22,6 +20,17 @@
   display: flex;
   align-items: center;
   margin-left: 16px;
+}
+.sidebar__line {
+  margin-top: 24px;
+}
+.sidebar__profile-data,
+.sidebar__logout {
+  font-family: "Cabinet Grotesk Medium";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  margin: 8px 0 0 0;
 }
 .sidebar__profile-data {
   cursor: pointer;

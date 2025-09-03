@@ -47,6 +47,20 @@ function getUserInfo(token) {
   }).then(checkResponse);
 }
 
+function setUserInfo({ name, avatar }, token) {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      name,
+      avatar,
+    }),
+  }).then(checkResponse);
+}
+
 function addCardLike(cardId, token) {
   return fetch(`${BASE_URL}/items/likes/${cardId}`, {
     method: "PUT",
@@ -75,4 +89,5 @@ export {
   getUserInfo,
   addCardLike,
   removeCardLike,
+  setUserInfo,
 };

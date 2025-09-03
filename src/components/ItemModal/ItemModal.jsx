@@ -21,9 +21,13 @@ function ItemModal({ isOpen, card, onClose, onDeleteItem }) {
             <p className="modal__weather">Weather: {card.weather}</p>
           </div>
           {isOwn && (
-            <p className="modal__delete" onClick={handDeleteItem}>
+            <button
+              type="button"
+              className="modal__delete"
+              onClick={handDeleteItem}
+            >
               Delete item
-            </p>
+            </button>
           )}
         </div>
       </div>

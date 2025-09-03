@@ -38,3 +38,23 @@
   font-size: 20px;
   line-height: 100%;
 }
+.header__sign-up-btn {
+  margin: 0 20px 0 20px;
+  border: none;
+  font-family: "Cabinet Grotesk Medium";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  cursor: pointer;
+  padding: 0;
+}
+.header__log-in-btn {
+  border: none;
+  font-family: "Cabinet Grotesk Medium";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}

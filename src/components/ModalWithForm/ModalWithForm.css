@@ -81,7 +81,7 @@
   margin-bottom: 12px;
 }
 .modal__submit {
-  max-width: 124px;
+  max-width: 128px;
   color: #fff;
   background-color: #000;
   border: none;
@@ -94,4 +94,16 @@
 }
 .modal__submit:disabled {
   background: #0000004d;
+}
+.modal__line {
+  display: flex;
+}
+.modal__login {
+  margin: 0 0 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.modal__login-text {
+  cursor: pointer;
 }

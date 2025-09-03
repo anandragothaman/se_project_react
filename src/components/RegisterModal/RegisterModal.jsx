@@ -6,6 +6,7 @@ export default function RegisterModal({
   onClose,
   isOpen,
   onRegisterModalSubmit,
+  handleLogInClick,
 }) {
   const [name, setName] = useState("");
   const [avatar, setAvatarUrl] = useState("");
@@ -42,6 +43,7 @@ export default function RegisterModal({
       title="Sign up"
       isOpen={isOpen}
       onClose={onClose}
+      handleLogInClick={handleLogInClick}
       onSubmit={handleSubmit}
     >
       <label htmlFor="email" className="modal__label">

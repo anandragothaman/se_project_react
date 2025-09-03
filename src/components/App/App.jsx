@@ -5,14 +5,15 @@ import { coordinates, APIkey } from "../../utils/constants";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import ItemModal from "../ItemModal/ItemModal";
 import { filterWeatherData, getWeather } from "../../utils/weatherApi";
 import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
+import ItemModal from "../ItemModal/ItemModal";
 import AddItemModal from "../AddItemModal/AddItemModal";
-import Profile from "../Profile/Profile";
-import * as api from "../../utils/api";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
+import Profile from "../Profile/Profile";
+import * as api from "../../utils/api";
 import { signIn, signUp } from "../../utils/auth";
 import { setToken, getToken } from "../../utils/token";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
@@ -54,7 +55,6 @@ function App() {
 
   const handleCardLike = ({ id, isLiked }) => {
     const token = localStorage.getItem("jwt");
-    console.log("id,isLiked:::: " + id, isLiked);
     !isLiked
       ? api
           .addCardLike(id, token)
@@ -86,17 +86,30 @@ function App() {
     setActiveModal("login");
   };
 
+  const handleEditProfileClick = () => {
+    setActiveModal("edit-profile");
+  };
+
   const handleRegisterModalSubmit = ({ email, password, name, avatar }) => {
     auth
       .signUp({ email, password, name, avatar })
       .then((data) => {
-        if (data.token) {
-          setToken(data.token);
-          setIsLoggedIn(true);
-          const redirectPath = location.state?.from?.pathname || "/";
-          navigate(redirectPath);
-          closeActiveModal();
-        }
+        handleLoginModalSubmit({ email, password });
+      })
+      .catch(console.error);
+  };
+
+  const handleEditProfileModalSubmit = ({ name, avatar }) => {
+    const jwt = getToken();
+    if (!jwt) {
+      setIsLoggedIn(false);
+      return;
+    }
+    api
+      .setUserInfo({ name, avatar }, jwt)
+      .then(({ name, email, avatar, _id }) => {
+        setCurrentUser({ name, email, avatar, _id });
+        closeActiveModal();
       })
       .catch(console.error);
   };
@@ -197,7 +210,7 @@ function App() {
         setCurrentUser({ name, email, avatar, _id });
       })
       .catch(console.error);
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
@@ -235,6 +248,7 @@ function App() {
                         clothingItems={clothingItems}
                         onCardClick={handleCardClick}
                         onCardLike={handleCardLike}
+                        onEditProfileModalSubmit={handleEditProfileClick}
                       />
                     </ProtectedRoute>
                   }
@@ -247,11 +261,13 @@ function App() {
               isOpen={activeModal === "register"}
               onClose={closeActiveModal}
               onRegisterModalSubmit={handleRegisterModalSubmit}
+              handleLogInClick={handleLogInClick}
             />
             <LoginModal
               isOpen={activeModal === "login"}
               onClose={closeActiveModal}
               onLoginModalSubmit={handleLoginModalSubmit}
+              handleSignUpClick={handleSignUpClick}
             />
             <AddItemModal
               isOpen={activeModal === "add-garment"}
@@ -263,6 +279,11 @@ function App() {
               card={selectedCard}
               onDeleteItem={handleDeleteItem}
               onClose={closeActiveModal}
+            />
+            <EditProfileModal
+              isOpen={activeModal === "edit-profile"}
+              onClose={closeActiveModal}
+              onEditProfileModalSubmit={handleEditProfileModalSubmit}
             />
           </div>
         </CurrentTemperatureUnitContext.Provider>
