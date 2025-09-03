@@ -1,5 +1,4 @@
-const baseUrl = "http://localhost:3001";
-const header = { "Content-Type": "application/json" };
+const BASE_URL = "http://localhost:3001";
 
 function checkResponse(res) {
   if (res.ok) {
@@ -9,13 +8,16 @@ function checkResponse(res) {
 }
 
 function getItems() {
-  return fetch(`${baseUrl}/items`).then(checkResponse);
+  return fetch(`${BASE_URL}/items`).then(checkResponse);
 }
 
-function addItems({ name, imageUrl, weather }) {
-  return fetch(`${baseUrl}/items`, {
+function addItems({ name, imageUrl, weather }, token) {
+  return fetch(`${BASE_URL}/items`, {
     method: "POST",
-    headers: header,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({
       name,
       imageUrl,
@@ -24,11 +26,53 @@ function addItems({ name, imageUrl, weather }) {
   }).then(checkResponse);
 }
 
-function deleteItem(id) {
-  return fetch(`${baseUrl}/items/${id}`, {
+function deleteItem(id, token) {
+  return fetch(`${BASE_URL}/items/${id}`, {
     method: "DELETE",
-    headers: header,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   }).then(checkResponse);
 }
 
-export { getItems, addItems, deleteItem, checkResponse };
+function getUserInfo(token) {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(checkResponse);
+}
+
+function addCardLike(cardId, token) {
+  return fetch(`${BASE_URL}/items/likes/${cardId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(checkResponse);
+}
+
+function removeCardLike(cardId, token) {
+  return fetch(`${BASE_URL}/items/likes/${cardId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  }).then(checkResponse);
+}
+
+export {
+  getItems,
+  addItems,
+  deleteItem,
+  checkResponse,
+  getUserInfo,
+  addCardLike,
+  removeCardLike,
+};

@@ -2,6 +2,11 @@
   display: flex;
   gap: 16px;
   align-items: center;
+  flex-direction: column;
+}
+.sidebar__header {
+  display: flex;
+  flex-direction: row;
 }
 .sidebar__avatar {
   width: 56px;
@@ -14,4 +19,13 @@
   font-size: 20px;
   line-height: 100%;
   width: max-content;
+  display: flex;
+  align-items: center;
+  margin-left: 16px;
+}
+.sidebar__profile-data {
+  cursor: pointer;
+}
+.sidebar__logout {
+  cursor: pointer;
 }

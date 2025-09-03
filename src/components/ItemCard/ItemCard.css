@@ -16,11 +16,30 @@
   position: absolute;
   top: 15px;
   margin: 0;
-  padding: 0 12px;
-  background-color: #fff;
   border-radius: 4px;
+}
+.card__name-text {
+  background: #fff;
+  padding: 0 12px;
+  display: inline-block;
 }
 .card__image {
   border-radius: 16px;
   width: 100%;
+}
+.card__like-button {
+  width: 20px;
+  height: 18px;
+  background: transparent url("../../assets/like-icon-default.svg") center
+    no-repeat;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 10px;
+  position: relative;
+  top: 5px;
+}
+.card__like-button_liked {
+  background: transparent url("../../assets/like-icon-liked.svg") center
+    no-repeat;
 }

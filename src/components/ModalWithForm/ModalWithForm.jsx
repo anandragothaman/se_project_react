@@ -3,6 +3,8 @@ import close from "../../assets/close-dark.svg";
 function ModalWithForm({
   children,
   buttonText,
+  isLogin,
+  isRegister,
   title,
   isOpen,
   onClose,
@@ -19,7 +21,17 @@ function ModalWithForm({
           {children}
           <button type="submit" className="modal__submit">
             {buttonText}
-          </button>
+          </button>{" "}
+          {isLogin && !isRegister && (
+            <p>
+              or <span>Register</span>
+            </p>
+          )}
+          {isRegister && !isLogin && (
+            <p>
+              or <span>Log in</span>
+            </p>
+          )}
         </form>
       </div>
     </div>

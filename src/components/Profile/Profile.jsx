@@ -7,6 +7,7 @@ export default function Profile({
   onCardClick,
   clothingItems,
   weatherData,
+  onCardLike,
 }) {
   return (
     <div className="profile">
@@ -19,6 +20,7 @@ export default function Profile({
           weatherData={weatherData}
           clothingItems={clothingItems}
           onCardClick={onCardClick}
+          onCardLike={onCardLike}
         />
       </section>
     </div>
