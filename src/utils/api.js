@@ -62,7 +62,7 @@ function setUserInfo({ name, avatar }, token) {
 }
 
 function addCardLike(cardId, token) {
-  return fetch(`${BASE_URL}/items/likes/${cardId}`, {
+  return fetch(`${BASE_URL}/items/${cardId}/likes`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -72,7 +72,7 @@ function addCardLike(cardId, token) {
 }
 
 function removeCardLike(cardId, token) {
-  return fetch(`${BASE_URL}/items/likes/${cardId}`, {
+  return fetch(`${BASE_URL}/items/${cardId}/likes`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

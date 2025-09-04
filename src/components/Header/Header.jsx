@@ -18,20 +18,6 @@ function Header({
     month: "long",
     day: "numeric",
   });
-  const getInitials = (fullName) => {
-    if (!fullName) return "";
-    const parts = fullName.split(" ");
-    let initials = "";
-    if (parts.length > 0) {
-      initials += parts[0].charAt(0).toUpperCase();
-    }
-    if (parts.length > 1) {
-      initials += parts[parts.length - 1].charAt(0).toUpperCase();
-    }
-    return initials;
-  };
-
-  const initials = getInitials(name);
   return (
     <header className="header">
       <Link to="/">
@@ -54,7 +40,7 @@ function Header({
             <div className="header__user-container">
               <p className="header__username">{currentUser.name}</p>{" "}
               <img
-                src={avatar}
+                src={currentUser.avatar ? currentUser.avatar : avatar}
                 alt={currentUser.name + " avatar"}
                 className="header__avatar"
               />

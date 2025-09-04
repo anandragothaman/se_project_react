@@ -22,7 +22,7 @@ export default function SideBar({ onEditProfileModalSubmit }) {
     <div className="sidebar">
       <div className="sidebar__header">
         <img
-          src={avatar}
+          src={currentUser.avatar ? currentUser.avatar : avatar}
           alt={currentUser.name + " avatar"}
           className="sidebar__avatar"
         />

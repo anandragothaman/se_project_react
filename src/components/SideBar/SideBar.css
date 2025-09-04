@@ -9,6 +9,11 @@
 .sidebar__avatar {
   width: 56px;
   height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  background-color: #c4c4c4;
+  border: 1px solid #0000004d;
 }
 .sidebar__username {
   margin: 0;
