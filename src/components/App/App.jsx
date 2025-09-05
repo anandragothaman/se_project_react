@@ -1,24 +1,30 @@
+//React imports
 import { useEffect, useState } from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+
+//Css import
 import "./App.css";
-import { coordinates, apiKey } from "../../utils/constants";
+
+//Component imports
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
-import { filterWeatherData, getWeather } from "../../utils/weatherApi";
-import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
 import ItemModal from "../ItemModal/ItemModal";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
 import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import Profile from "../Profile/Profile";
-import * as api from "../../utils/api";
-import { signIn, signUp } from "../../utils/auth";
-import { setToken, getToken } from "../../utils/token";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import AppContext from "../../Contexts/AppContext";
+
+//Utils/Api imports
+import { coordinates, apiKey } from "../../utils/constants";
+import { filterWeatherData, getWeather } from "../../utils/weatherApi";
+import * as api from "../../utils/api";
+import { setToken, getToken } from "../../utils/token";
 import * as auth from "../../utils/auth";
+import CurrentTemperatureUnitContext from "../../Contexts/CurrentTemperatureUnitContext";
+import AppContext from "../../Contexts/AppContext";
 import CurrentUserContext from "../../Contexts/CurrentUserContext";
 
 function App() {
@@ -63,7 +69,9 @@ function App() {
               cards.map((item) => (item._id === id ? updatedCard : item))
             );
           })
-          .catch((err) => console.log(err))
+          .catch((error) => {
+            console.error("Failed to add card like:", error);
+          })
       : api
           .removeCardLike(id, token)
           .then((updatedCard) => {
@@ -71,7 +79,9 @@ function App() {
               cards.map((item) => (item._id === id ? updatedCard : item))
             );
           })
-          .catch((err) => console.log(err));
+          .catch((error) => {
+            console.error("Failed to remove card like:", error);
+          });
   };
 
   const handleAddClick = () => {
@@ -96,7 +106,9 @@ function App() {
       .then((data) => {
         handleLoginModalSubmit({ email, password });
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to register:", error);
+      });
   };
 
   const handleEditProfileModalSubmit = ({ name, avatar }) => {
@@ -111,7 +123,9 @@ function App() {
         setCurrentUser({ name, email, avatar, _id });
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to set user info:", error);
+      });
   };
 
   const handleLoginModalSubmit = ({ email, password }) => {
@@ -126,7 +140,9 @@ function App() {
           closeActiveModal();
         }
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to signin:", error);
+      });
   };
 
   const handleAddItemModalSubmit = ({ name, imageUrl, weather }) => {
@@ -142,7 +158,9 @@ function App() {
         setClothingItems((prevItems) => [data, ...prevItems]);
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to add clothing item:", error);
+      });
   };
   const handleDeleteItem = (id) => {
     const jwt = getToken();
@@ -154,13 +172,14 @@ function App() {
     api
       .deleteItem(id, jwt)
       .then(() => {
-        //const updatedRecords = clothingItems.filter((item) => item._id !== id);
         setClothingItems((prevItems) => {
           return prevItems.filter((item) => item._id !== id);
         });
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to delete clothing item:", error);
+      });
   };
   const closeActiveModal = () => {
     setActiveModal("");
@@ -171,7 +190,9 @@ function App() {
         const filterData = filterWeatherData(data);
         setWeatherData(filterData);
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to fetch weather data:", error);
+      });
   }, []);
 
   useEffect(() => {
@@ -180,7 +201,9 @@ function App() {
       .then((data) => {
         setClothingItems(data);
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to fetch clothing items:", error);
+      });
   }, []);
 
   useEffect(() => {
@@ -209,7 +232,9 @@ function App() {
         setIsLoggedIn(true);
         setCurrentUser({ name, email, avatar, _id });
       })
-      .catch(console.error);
+      .catch((error) => {
+        console.error("Failed to fetch user info:", error);
+      });
   }, [isLoggedIn]);
 
   return (
