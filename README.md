@@ -1,6 +1,6 @@
 # WTWR (What to Wear?): Front End
 
-The front-end project is focused on creating a user interface for the WTWR application. It includes working with creating the layout, implementing authorisation and authentiation based on jwt token, updating the user profile, add new cloth items using the cards, like and dislike the cards, deleting the cards. The goal is to create a web app with an API and user authorization.
+The front-end project is focused on creating a user interface for the WTWR application. It includes working with creating the layout, implementing authorisation and authentication based on jwt token, updating the user profile, add new cloth items using the cards, like and dislike the cards, deleting the cards. The goal is to create a web app with an API and user authorization.
 
 ## Project features
 
