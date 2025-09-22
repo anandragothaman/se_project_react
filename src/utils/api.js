@@ -1,4 +1,7 @@
-const BASE_URL = "http://localhost:3001";
+const BASE_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://api.wtwr.aerwear.ro"
+    : "http://localhost:3001";
 
 function checkResponse(res) {
   if (res.ok) {
